@@ -1,22 +1,31 @@
+
 import typer
+import json
+from pathlib import Path
 
 app = typer.Typer()
+tasks_file = Path("tasks.json")
 
-@app.command()
-def main(name : str):
-    print(f"hello {name}")
-
-@app.command()
-def greethi(name: str, formal:bool = False):
-    if formal
-        print(f"how is your day going mr/miss {name}")
-    else:
-        print(f"hi {name}")
+if tasks_file.exists():
+    with open(tasks_file, "r") as file:
+        tasks = json.load(file)
+else:
+    tasks = {}
 
 
 @app.command()
-def sayhi(name: str, )
+def add_task():
+    task_description = typer.prompt("Enter the task")
+    complete_by = typer.prompt("How much time to allot for this task in days")
+    
+    tasks[task_description] = complete_by
+    
+    with open(tasks_file, "w") as file:
+        json.dump(tasks, file)
+    
+    print(tasks)
 
 
 if __name__ == "__main__":
     app()
+
